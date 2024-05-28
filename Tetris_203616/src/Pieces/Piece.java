@@ -28,7 +28,7 @@ public abstract class Piece {
 		boolean value = false;
 		int x = getX();
 		int y = getY();
-		if(getMinY( + y <= 0)) {
+		if(getMinY() + y <= 0) {
 			value = true;
 		}
 		
@@ -38,7 +38,7 @@ public abstract class Piece {
 		return value;
 	}
 	
-	public boolean isOberlap(int dir) {
+	public boolean isOverlap(int dir) {
 		int x = getX();
 		int y = getY();
 		switch(dir) {
@@ -97,7 +97,7 @@ public abstract class Piece {
 		return min;
 	}
 	
-	public int getMaY() {
+	public int getMaxY() {
 		int max = r[0];
 		for(int i = 1; i < r.length; i++) {
 			if(r[i] > max) {

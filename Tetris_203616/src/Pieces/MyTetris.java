@@ -15,6 +15,7 @@ public class MyTetris extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private TetrisCanvas tetrisCanvas = null;
 
 	/**
 	 * Launch the application.
@@ -46,6 +47,11 @@ public class MyTetris extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("시작");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tetrisCanvas.start();
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("종료");
@@ -59,6 +65,9 @@ public class MyTetris extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		
+		TetrisCanvas tetrisCanvas = new TetrisCanvas();
+		contentPane.add(tetrisCanvas);
 	}
 
 }
