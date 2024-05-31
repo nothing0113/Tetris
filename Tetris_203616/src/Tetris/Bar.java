@@ -1,4 +1,4 @@
-package Pieces;
+package Tetris;
 
 public class Bar extends Piece{
 	public Bar(TetrisData data) {

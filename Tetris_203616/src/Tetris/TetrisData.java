@@ -1,4 +1,4 @@
-package Pieces;
+package Tetris;
 
 public class TetrisData {
 	public static final int ROW = 20;

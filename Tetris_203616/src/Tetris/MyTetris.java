@@ -1,4 +1,4 @@
-package Pieces;
+package Tetris;
 
 import java.awt.EventQueue;
 
@@ -10,12 +10,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.FlowLayout;
 
 public class MyTetris extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private TetrisCanvas tetrisCanvas = null;
+	private TetrisCanvas tetrisCanvas = null; // 필드로 선언된 TetrisCanvas
 
 	/**
 	 * Launch the application.
@@ -38,7 +42,7 @@ public class MyTetris extends JFrame {
 	 */
 	public MyTetris() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 270, 590);
+		setBounds(100, 100, 525, 647);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -61,12 +65,16 @@ public class MyTetris extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("2인");
+		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		TetrisCanvas tetrisCanvas = new TetrisCanvas();
+		tetrisCanvas = new TetrisCanvas(); // 필드로 선언된 tetrisCanvas를 초기화
 		contentPane.add(tetrisCanvas);
 	}
 

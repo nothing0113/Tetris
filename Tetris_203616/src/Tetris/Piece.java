@@ -1,11 +1,11 @@
-package Pieces;
+package Tetris;
 
 import java.awt.Point;
 
 public abstract class Piece {
 	final int DOWN = 0;
-	final int LEFT = 0;
-	final int RIGHT = 0;
+	final int LEFT = 1;
+	final int RIGHT = 2;
 	protected int r[];
 	protected int c[];
 	protected TetrisData data; // 테트리스 내부 데이터
@@ -77,7 +77,7 @@ public abstract class Piece {
 		return min;
 	}
 	
-	public int getMaX() {
+	public int getMaxX() {
 		int max = c[0];
 		for(int i = 1; i < c.length; i++) {
 			if(c[i] > max) {
@@ -127,33 +127,74 @@ public abstract class Piece {
 	}
 	
 	public void moveRight() { // 오른쪽으로 이동
-		if(center.x + getMinX() + 1 < TetrisData.COL)
+		if(center.x + getMaxX() + 1 < TetrisData.COL)
 			if(isOverlap(RIGHT) != true) {center.x++;}
 		else return;
 	}
 	
-	public void rotate() { //조각회전
-		int rc = roteType();
-		if(rc <= 1) return;
-		
-		if(rc == 2) {
-			rotate4();
-			rotate4();
-			rotate4();
-		} else {
-			rotate4();
-		}
+	 public void rotate() {
+	        int rc = roteType();
+	        if (rc <= 1) return;
+
+	        //현재 좌표 저장
+	        int[] currentR = r.clone();
+	        int[] currentC = c.clone();
+
+	        //회전 
+	        if (rc == 2) {
+	            rotate4();
+	            rotate4();
+	            rotate4();
+	        } else {
+	            rotate4();
+	        }
+
+	        //회전된 도형이 범위를 벗어나는지 확인
+	        int minX = getMinX();
+	        int maxX = getMaxX();
+	        int maxY = getMaxY();
+
+	        if (center.x + minX < 0 || center.x + maxX >= TetrisData.COL || center.y + maxY >= TetrisData.ROW) {
+	            //회전된 도형이 범위를 나감
+	            r = currentR;
+	            c = currentC;
+	            return;
+	        }
+
+	        // 회전도형이 다른 블록과 겹치는지 확인
+	        if (isOverlapWithBlocks()) {
+	            //회전도형이 다른 블록과 겹치면 회전을 되돌리기
+	            r = currentR;
+	            c = currentC;
+	        }
+	    }
+
+	    private boolean isOverlapWithBlocks() {
+	        int x = center.x;
+	        int y = center.y;
+	        
+	        for (int i = 0; i < r.length; i++) {
+	            int newX = x + c[i];
+	            int newY = y + r[i];
+
+	            if (newX >= 0 && newX < TetrisData.COL && newY >= 0 && newY < TetrisData.ROW) {
+	                if (data.getAt(newY, newX) != 0) {
+	                    //회전된 도형이 블록과 겹침
+	                    return true;
+	                }
+	            }
+	        }
+	        
+	        return false;
+	    }
+
+
+	    
+	    public void rotate4() {
+	        for (int i = 0; i < 4; i++) {
+	            int temp = c[i];
+	            c[i] = -r[i];
+	            r[i] = temp;
+	        }
+	    }
 	}
-	
-	public void rotate4() {
-		for(int i = 0; i < 4; i++) {
-			int temp = c[i];
-			c[i] = -r[i];
-			r[i] = temp;
-		}
-	}
-	
-	
-	
-	
-}
